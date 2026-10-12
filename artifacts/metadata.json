@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "created_at_utc": "2026-10-12T15:08:10.404608+00:00",
+  "created_at_utc": "2026-10-12T15:36:27.290371+00:00",
   "feature_columns": [
     "yr",
     "mnth",
@@ -26,7 +26,7 @@
     "windspeed": "float64"
   },
   "environment": {
-    "python": "3.12.14",
+    "python": "3.12.13",
     "python_major_minor": "3.12",
     "libraries": {
       "numpy": "2.2.6",

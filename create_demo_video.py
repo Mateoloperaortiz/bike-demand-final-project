@@ -1,17 +1,21 @@
-"""Compone un borrador local de 120 s con capturas reales, sin alterar sus datos.
+"""Compone un video de 120 s con capturas reales, sin alterar sus datos.
 
 Uso: python create_demo_video.py
+Modo público (solo con URL y capturas previamente verificadas):
+    python create_demo_video.py --public-url https://nombre.streamlit.app
 No graba el navegador, no descarga imágenes y no vuelve a entrenar el modelo.
-El montaje se identifica siempre como local y pendiente de publicación.
+Los modos local y público guardan archivos separados para conservar la evidencia.
 """
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+import argparse
+from dataclasses import dataclass, replace
 import hashlib
 import json
 from pathlib import Path
 import subprocess
+from urllib.parse import urlsplit
 
 import imageio_ffmpeg
 from PIL import Image, ImageDraw, ImageFont, ImageOps
@@ -83,6 +87,35 @@ SCENES = [
 ]
 
 
+def public_url_argument(value):
+    """Requiere una URL HTTPS pública sin credenciales; no comprueba el alojamiento."""
+    parsed = urlsplit(value)
+    if parsed.scheme != "https" or not parsed.hostname or parsed.username or parsed.password:
+        raise argparse.ArgumentTypeError("La URL pública debe ser HTTPS y no incluir credenciales.")
+    if parsed.query or parsed.fragment:
+        raise argparse.ArgumentTypeError("Usa la URL principal de la app, sin parámetros ni fragmentos.")
+    return value.rstrip("/")
+
+
+def selected_scenes(public_url=None):
+    """El modo público exige otros archivos; nunca reutiliza las capturas locales."""
+    if public_url is None:
+        return SCENES
+    scenes = []
+    for scene in SCENES:
+        if scene.image.startswith("media/app_"):
+            scene = replace(scene, image=scene.image.replace("media/app_", "media/public_app_", 1))
+        if scene.kind == "intro":
+            scene = replace(
+                scene, subtitle="BiciHora · app pública",
+                caption=scene.caption + " Esta demostración es un montaje de capturas reales de la app pública.",
+            )
+        elif scene.kind == "method":
+            scene = replace(scene, subtitle="Notebook ejecutado en Colab · CPU")
+        scenes.append(scene)
+    return scenes
+
+
 def font(size: int, bold: bool = False):
     candidates = (
         ["C:/Windows/Fonts/segoeuib.ttf", "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"]
@@ -137,24 +170,29 @@ def image_panel(canvas: Image.Image, source: Path, crop=None, box=(675, 245, 184
     canvas.paste(contained, (x, y))
 
 
-def base_scene(scene, index, start, end):
+def base_scene(scene, index, start, end, public_url=None):
     canvas = Image.new("RGB", (WIDTH, HEIGHT), CREAM)
     draw = ImageDraw.Draw(canvas)
     draw.text((78, 42), "BiciHora", font=font(38, True), fill=INK)
-    draw.rounded_rectangle((1000, 40, 1840, 91), radius=24, fill="#f2ead7")
-    draw.text((1020, 49), "Demostración local · pendiente de publicación", font=font(27, True), fill=GOLD)
+    status = "App pública · capturas verificadas" if public_url else "Demostración local · pendiente de publicación"
+    draw.rounded_rectangle((1000, 40, 1840, 91), radius=24, fill=PALE if public_url else "#f2ead7")
+    draw.text((1020, 49), status, font=font(27, True), fill=GREEN if public_url else GOLD)
     draw.line((78, 114, 1840, 114), fill=LINE, width=2)
     draw.text((80, 153), scene.subtitle.upper(), font=font(22, True), fill=MUTED)
     title_size = 50 if scene.kind not in ("method", "limits") else 46
     title_end = text_block(draw, scene.title, (78, 200), 540, title_size, bold=True, spacing=6)
     draw.line((78, 999, 1840, 999), fill=LINE, width=2)
-    draw.text((78, 1022), "Video de capturas del prototipo · sin grabación del alojamiento público", font=font(22), fill=MUTED)
+    footer = (
+        f"Montaje de capturas reales de la app pública · {public_url}"
+        if public_url else "Video de capturas del prototipo · sin grabación del alojamiento público"
+    )
+    text_block(draw, footer, (78, 1022), 1430, 22, color=MUTED, spacing=3)
     draw.text((1535, 1022), f"{index + 1:02d} / {len(SCENES):02d}   ·   {start:03d}–{end:03d} s", font=font(22), fill=MUTED)
     return canvas, draw, title_end
 
 
-def compose(scene, index, start, model, metadata, summary):
-    canvas, draw, title_end = base_scene(scene, index, start, start + scene.duration)
+def compose(scene, index, start, model, metadata, summary, public_url=None):
+    canvas, draw, title_end = base_scene(scene, index, start, start + scene.duration, public_url)
     source = ROOT / scene.image
     if not source.exists():
         raise FileNotFoundError(f"Falta la captura o figura real: {source}")
@@ -165,7 +203,11 @@ def compose(scene, index, start, model, metadata, summary):
         y = text_block(draw, "17.379 observaciones horarias\nFuente pública: UCI Bike Sharing", (80, y + 30), 515, 27, color=MUTED)
         text_block(draw, "Calendario + clima → demanda", (80, y + 36), 520, 29, bold=True)
         image_panel(canvas, source, crop=(765, 85, 1800, 605))
-        text_block(draw, "Vista real del prototipo local. Los ejemplos se calculan con el modelo guardado.", (700, 918), 1100, 23, color=MUTED, spacing=5)
+        note = (
+            "Captura real de la app pública. Los ejemplos se calculan con el modelo guardado."
+            if public_url else "Vista real del prototipo local. Los ejemplos se calculan con el modelo guardado."
+        )
+        text_block(draw, note, (700, 918), 1100, 23, color=MUTED, spacing=5)
 
     elif scene.kind == "example":
         example = metadata["examples"][scene.example_index]
@@ -220,7 +262,11 @@ def compose(scene, index, start, model, metadata, summary):
         y = text_block(draw, "MAE de 134,21 alquileres/hora", (80, y + 18), 520, 28, color=MUTED)
         y = text_block(draw, "El prototipo describe 2011–2012.", (80, y + 38), 520, 30, bold=True)
         y = text_block(draw, "Para operar hoy:\ndatos recientes, nueva validación y seguimiento del error.", (80, y + 22), 520, 28, color=MUTED, spacing=12)
-        text_block(draw, "Siguiente paso: publicar y verificar el acceso público.", (80, y + 32), 520, 28, bold=True)
+        next_step = (
+            "Siguiente paso: seguimiento y actualización con datos recientes."
+            if public_url else "Siguiente paso: publicar y verificar el acceso público."
+        )
+        text_block(draw, next_step, (80, y + 32), 520, 28, bold=True)
         image_panel(canvas, source, box=(675, 245, 1840, 811))
         text_block(draw, "El error cambia con el horario; no basta con mirar el promedio.", (700, 844), 1110, 28, bold=True)
         text_block(draw, "Reajuste: revisar mensualmente el error y las entradas; investigar un aumento del MAE mayor al 20 % durante dos meses. Umbral operativo inicial.", (700, 900), 1110, 25, color=MUTED, spacing=7)
@@ -236,9 +282,21 @@ def subtitle_timestamp(seconds):
 
 
 def main():
-    assert sum(scene.duration for scene in SCENES) == 120
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--public-url", type=public_url_argument,
+        help="URL de la app pública ya verificada; requiere media/public_app_{laboral,sabado,lluvia}.png.",
+    )
+    arguments = parser.parse_args()
+    public_url = arguments.public_url
+    scenes = selected_scenes(public_url)
+    assert sum(scene.duration for scene in scenes) == 120
+    missing = sorted({scene.image for scene in scenes if not (ROOT / scene.image).is_file()})
+    if missing:
+        parser.error("Faltan capturas o figuras reales: " + ", ".join(missing))
+    prefix = "demo_public" if public_url else "demo_local"
     MEDIA.mkdir(exist_ok=True)
-    frames = MEDIA / "demo_frames"
+    frames = MEDIA / ("demo_public_frames" if public_url else "demo_frames")
     frames.mkdir(exist_ok=True)
     model, metadata = load_artifacts(ROOT / "artifacts")
     summary = json.loads((ROOT / "reportes/training_summary.json").read_text(encoding="utf-8"))
@@ -246,9 +304,9 @@ def main():
     subtitles = []
     scene_records = []
     start = 0
-    for index, scene in enumerate(SCENES):
+    for index, scene in enumerate(scenes):
         output = frames / f"{scene.slug}.png"
-        compose(scene, index, start, model, metadata, summary).save(output)
+        compose(scene, index, start, model, metadata, summary, public_url).save(output)
         concat_lines.extend([f"file '{output.name}'", f"duration {scene.duration}"])
         end = start + scene.duration
         subtitles.append(f"{index + 1}\n{subtitle_timestamp(start)} --> {subtitle_timestamp(end)}\n{scene.caption}\n")
@@ -259,11 +317,11 @@ def main():
             "caption": scene.caption,
         })
         start = end
-    concat_lines.append(f"file '{SCENES[-1].slug}.png'")
+    concat_lines.append(f"file '{scenes[-1].slug}.png'")
     concat_path = frames / "scenes.ffconcat"
     concat_path.write_text("\n".join(concat_lines) + "\n", encoding="utf-8")
-    (MEDIA / "demo_local_120s.srt").write_text("\n".join(subtitles), encoding="utf-8")
-    movie = MEDIA / "demo_local_120s.mp4"
+    (MEDIA / f"{prefix}_120s.srt").write_text("\n".join(subtitles), encoding="utf-8")
+    movie = MEDIA / f"{prefix}_120s.mp4"
     command = [
         imageio_ffmpeg.get_ffmpeg_exe(), "-hide_banner", "-loglevel", "error", "-y",
         "-f", "concat", "-safe", "0", "-i", str(concat_path),
@@ -282,14 +340,15 @@ def main():
     assert abs(seconds - 120.0) <= 0.001, seconds
     assert abs(video_metadata["duration"] - 120.0) <= 0.001, video_metadata
     verification = {
-        "file": "media/demo_local_120s.mp4", "duration_seconds": seconds,
+        "file": f"media/{prefix}_120s.mp4", "duration_seconds": seconds,
         "frames": frame_count, "fps": FPS, "width": WIDTH, "height": HEIGHT,
         "codec": video_metadata["codec"], "audio": False,
-        "status": "Demostración local · pendiente de publicación",
-        "kind": "Montaje de capturas reales del prototipo, con encuadre y texto externo",
+        "status": "App pública · capturas verificadas" if public_url else "Demostración local · pendiente de publicación",
+        "kind": "Montaje de capturas reales de la app pública" if public_url else "Montaje de capturas reales del prototipo, con encuadre y texto externo",
+        "public_url": public_url,
         "scenes": scene_records,
     }
-    (MEDIA / "demo_local_metadata.json").write_text(json.dumps(verification, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    (MEDIA / f"{prefix}_metadata.json").write_text(json.dumps(verification, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     print(json.dumps({key: value for key, value in verification.items() if key != "scenes"}, ensure_ascii=False, indent=2))
 
 
