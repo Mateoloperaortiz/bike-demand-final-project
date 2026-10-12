@@ -39,6 +39,28 @@ La captura muestra la recarga verificada y los tres escenarios; el notebook desc
 - [x] Borrador local de dos minutos generado, sin audio, con capturas reales, texto y subtítulos. No acredita un despliegue público.
 - [ ] Video final de dos minutos de la app pública, revisado y accesible, que reemplace el borrador local. El [guion](guion_video.md) está preparado.
 
+## Estado del despliegue y configuración preparada
+
+El usuario ya autorizó **los permisos OAuth de GitHub y el despliegue**. La publicación está pendiente de recuperar la conexión de automatización con Chrome: la lectura del DOM, el inventario de pestañas y la creación de una pestaña agotan el tiempo de espera. La conexión entre GitHub y Streamlit y la publicación de la app siguen sin verificar. El trabajo puede continuar con la autorización existente cuando Chrome vuelva a responder.
+
+| Campo de despliegue | Valor preparado |
+|---|---|
+| Repositorio | `Mateoloperaortiz/bike-demand-final-project` |
+| Rama | `main` |
+| Archivo de entrada | `streamlit_app.py` |
+| Python | `3.12` |
+| Dependencias | `requirements.txt` en la raíz del repositorio |
+| Secretos | Ninguno; el proyecto no requiere claves de API |
+
+Pasos en la interfaz, según la [guía oficial de Streamlit Community Cloud](https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/deploy):
+
+1. Cuando Chrome vuelva a responder, abrir [Streamlit Community Cloud](https://share.streamlit.io/) y completar el vínculo con GitHub. Comprobar que el repositorio esté disponible para desplegar.
+2. Elegir **Create app** y seleccionar la opción de una app existente. Introducir el repositorio, la rama y el archivo de entrada indicados en la tabla.
+3. En **Advanced settings**, elegir **Python 3.12**, dejar vacíos los secretos y guardar la configuración.
+4. Pulsar **Deploy**, revisar los registros de inicio y esperar a que aparezca la app. Registrar la URL que el servicio realmente asigne.
+5. Abrir esa URL en incógnito y comprobar los tres ejemplos, el acceso del visitante y la recuperación después de reiniciar la app. Actualizar las casillas anteriores con esos resultados.
+6. Capturar la interfaz pública para reemplazar el borrador de video local. El soporte y el guion del video están preparados; faltan las capturas de la app desplegada.
+
 ## Preparación de Colab y reinicio
 
 La prueba real encontró **Python 3.13 en el entorno predeterminado**. Para conservar Python 3.12 entre entrenamiento y app, `v1.1` fija `runtime_attributes.runtime_version` a `2026.07`. La [FAQ oficial](https://research.google.com/colaboratory/runtime-version-faq.html) identifica esa versión con Python 3.12.13.
