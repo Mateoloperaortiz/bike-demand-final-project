@@ -2,7 +2,7 @@
 
 **Duración prevista: 120 segundos exactos.** Grabar pantalla con voz en español y ajustar cada escena al tramo indicado. Mantener visible el nombre BiciHora y una escala legible; ocultar cuentas, pestañas personales y credenciales. La demostración debe usar los resultados del artefacto entregado, sin introducir cifras manuales.
 
-Ya se generó un [borrador local de 120 segundos](../media/demo_local_120s.mp4), un montaje de capturas reales de la app y figuras, **sin audio**, con [subtítulos SRT](../media/demo_local_120s.srt). Su [metadata](../media/demo_local_metadata.json) registra duración, escenas y procedencia. El siguiente guion prepara la grabación final de la app pública, que reemplazará este borrador después del despliegue.
+Ya se generó un [borrador local de 120 segundos](../media/demo_local_120s.mp4), un montaje de capturas reales de la app y figuras, **sin audio**, con [subtítulos SRT](../media/demo_local_120s.srt). Sus [metadatos](../media/demo_local_metadata.json) registran duración, escenas y procedencia. El siguiente guion prepara la grabación final de la app pública, que reemplazará este borrador después del despliegue.
 
 | Tiempo | Pantalla y acción | Narración propuesta |
 |---|---|---|

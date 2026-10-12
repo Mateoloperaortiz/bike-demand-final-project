@@ -534,7 +534,7 @@ md("""
 nb = nbf.v4.new_notebook(cells=cells)
 nb.metadata.update({
     'kernelspec': {'display_name': 'Python 3', 'language': 'python', 'name': 'python3'},
-    'language_info': {'name': 'python', 'version': '3.12.14'},
+    'language_info': {'name': 'python', 'version': '3.12'},
     'colab': {'name': 'model_development.ipynb', 'provenance': [],
               'runtime_attributes': {'runtime_version': '2026.07'}},
 })

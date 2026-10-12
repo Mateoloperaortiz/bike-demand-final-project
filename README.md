@@ -7,14 +7,14 @@ El desarrollo y entrenamiento se realizan en un notebook compatible con **Google
 ## Abrir el proyecto
 
 - **Notebook:** [model_development.ipynb](model_development.ipynb).
-- **Colab desde GitHub:** [abrir la versión v1.1 en Google Colab](https://colab.research.google.com/github/Mateoloperaortiz/bike-demand-final-project/blob/v1.1/model_development.ipynb).
-- **Código:** [repositorio público en GitHub](https://github.com/Mateoloperaortiz/bike-demand-final-project). `v1.0` está publicada; esta entrega actualiza la configuración de Colab en `v1.1`.
+- **Colab desde GitHub:** [abrir el notebook ejecutado en Google Colab](https://colab.research.google.com/github/Mateoloperaortiz/bike-demand-final-project/blob/main/model_development.ipynb).
+- **Código:** [repositorio público en GitHub](https://github.com/Mateoloperaortiz/bike-demand-final-project). La versión `v1.1` está publicada; `main` contiene el notebook con resultados de la ejecución real de Colab.
 - **Demostración local:** [video de 120 segundos](media/demo_local_120s.mp4) y [subtítulos SRT](media/demo_local_120s.srt), sin audio, a partir de capturas reales del prototipo.
 - **App pública:** publicación y verificación pendientes; no se anuncia todavía una URL de Streamlit.
 
 ### Ejecutar en Google Colab
 
-1. Abrir el notebook de **`v1.1`**. También se puede descargar y usar **Archivo → Subir notebook**; su primera celda descarga automáticamente el código de esa misma versión.
+1. Abrir el notebook ejecutado de **`main`**. También se puede descargar y usar **Archivo → Subir notebook**. Sus salidas muestran la ejecución real de Colab; al volver a ejecutarlo, la primera celda descarga el código de la versión fija **`v1.1`** para reproducir el experimento.
 2. En **Entorno de ejecución → Cambiar tipo de entorno de ejecución**, elegir **Python 3**, acelerador **Ninguno / CPU** y **Versión del entorno: `2026.07`**. Esa versión usa Python **3.12.13** y está fijada en los metadatos del notebook. Comprobar la selección antes de conectar; en la prueba real el entorno predeterminado ofreció Python 3.13.
 3. Ejecutar la primera celda de preparación. Instala `requirements-colab.txt` y detecta bibliotecas antiguas ya cargadas. Si aparece la indicación de reinicio, usar **Entorno de ejecución → Reiniciar sesión** y después **Ejecutar todas** desde el principio. La instalación en disco no sustituye una biblioteca que ya está importada en memoria.
 4. La preparación descarga y comprueba los datos. El notebook desarrolla el EDA, ejecuta la comparación, selecciona el modelo y guarda la evaluación y los artefactos. No se necesita subir manualmente `hour.csv`.
@@ -110,7 +110,7 @@ El formulario utiliza percentiles **25, 50 y 75** de temperatura y viento del en
 
 ## Reproducibilidad y despliegue
 
-El entorno local de desarrollo usa **Python 3.12.14**, con versiones fijadas en los archivos de dependencias. Los metadatos guardan el entorno que produjo cada modelo y su hash. El cargador comprueba la misma versión mayor y menor de Python, las versiones exactas de NumPy, pandas, SciPy, scikit-learn y joblib, el esquema y el hash del modelo. El parche de Python queda registrado; la compatibilidad entre máquinas se confirma con predicciones de referencia. Scikit-learn requiere conservar las versiones de las dependencias entre entrenamiento e inferencia; consultar su [documentación de persistencia](https://scikit-learn.org/stable/model_persistence.html).
+El modelo entregado se entrenó en **Colab CPU, entorno `2026.07`, Python 3.12.13**. Se verificó también su carga en Windows con **Python 3.12.14**. Las dependencias están fijadas; los metadatos registran el entorno que produjo el modelo y su hash. El cargador comprueba la misma versión mayor y menor de Python, las versiones exactas de NumPy, pandas, SciPy, scikit-learn y joblib, el esquema y el hash del modelo. El parche de Python queda registrado; la compatibilidad entre ambas máquinas se confirmó con predicciones de referencia y la suite de pruebas. Scikit-learn requiere conservar las versiones de las dependencias entre entrenamiento e inferencia; consultar su [documentación de persistencia](https://scikit-learn.org/stable/model_persistence.html).
 
 Para publicar en Streamlit Community Cloud:
 
@@ -123,9 +123,9 @@ Si se vuelve a entrenar en un Colab que usa otra versión de Python, registrar e
 
 ### Estado de verificación
 
-El notebook se ejecutó localmente de principio a fin: **18 celdas de código, sin salidas de error**, con la fuente verificada. Se entrenaron las 18 configuraciones de las tres familias y la referencia; se exportaron métricas, figuras y el modelo. La recarga reproduce las cinco predicciones guardadas antes de serializar, con tolerancia absoluta y relativa de `1e-6`.
+El notebook se ejecutó de principio a fin tanto localmente como en una **sesión real de Google Colab CPU, entorno `2026.07`, Python 3.12.13**. La ejecución de Colab tiene **18 celdas de código numeradas de 1 a 18, sin errores**. Se descargaron el notebook con sus salidas y el ZIP de resultados, cuyos **28 archivos** de `artifacts/`, `reportes/` y `figuras/` se importaron a esta entrega.
 
-La suite local completó **48 pruebas aprobadas**. También se revisó la app en el navegador y sus tres ejemplos mostraron **721, 572 y 358** alquileres/hora. El código y `v1.0` están publicados en GitHub; `v1.1` incorpora el ajuste del entorno y reinicio de Colab. **La verificación completa en una sesión real de Colab está en curso y el despliegue público de Streamlit está pendiente.** El detalle está en [verificacion.md](docs/verificacion.md).
+Todas las métricas, predicciones de prueba, cinco referencias y SHA-256 del modelo coincidieron con la ejecución local. El modelo de Colab carga en Windows Python 3.12.14 y mantiene **48 pruebas aprobadas**. También se revisó la app local en el navegador: sus ejemplos muestran **721, 572 y 358** alquileres/hora. `v1.1` está publicada en GitHub y el notebook ejecutado se conserva en `main`. **El despliegue público de Streamlit sigue pendiente de conectar el repositorio y verificar la app.** El detalle y la evidencia de Colab están en [verificacion.md](docs/verificacion.md).
 
 Para repetir las pruebas después de generar o descargar los artefactos, con las dependencias de desarrollo instaladas:
 

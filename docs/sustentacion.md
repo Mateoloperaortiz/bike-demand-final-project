@@ -36,7 +36,7 @@ La diferencia entre MAE de ajuste y validación permite discutir sobreajuste. La
 
 ## Resultados y explicación
 
-La ejecución seleccionó **Gradient Boosting con histogramas** por MAE de validación. Las búsquedas internas ajustaron los parámetros y la validación posterior eligió la familia:
+La ejecución real completa de **Colab CPU, entorno `2026.07`, Python 3.12.13**, seleccionó **Gradient Boosting con histogramas** por MAE de validación. Se conservaron el notebook ejecutado, el modelo y los resultados descargados; coincidieron con la ejecución local y el modelo mantuvo 48 pruebas aprobadas en Windows Python 3.12.14. Las búsquedas internas ajustaron los parámetros y la validación posterior eligió la familia:
 
 | Modelo | MAE de ajuste | MAE de validación | RMSE de validación |
 |---|---:|---:|---:|

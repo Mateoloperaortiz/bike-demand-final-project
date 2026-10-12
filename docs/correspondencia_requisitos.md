@@ -19,8 +19,8 @@ Fuente: `Requeriments_FinalP.pdf`, entregado por el usuario. Sus apartados descr
 | Entregable | Material preparado | Comprobación antes de entregar |
 |---|---|---|
 | Repositorio | Código, README, dependencias, modelo, metadatos y documentos. | Enlace accesible, instalación reproducible y artefactos completos. |
-| `model_development.ipynb` | Notebook con explicaciones, EDA, justificación, comparación y evaluación. | Ejecutar todas las celdas; guardar las salidas de esa ejecución; conservar resultados fuera de la sesión de Colab. |
+| `model_development.ipynb` | Notebook real de Colab CPU, Python 3.12.13, con 18 celdas de código ejecutadas sin errores; explicaciones, EDA, justificación, comparación y evaluación. | Salidas guardadas y ZIP de resultados descargado e importado; métricas y modelo coherentes con ejecución local. Véase [verificación](verificacion.md). |
 | Video de demostración de dos minutos | [Borrador local de 120 segundos](../media/demo_local_120s.mp4), [subtítulos](../media/demo_local_120s.srt) y [guion final](guion_video.md), con tres escenarios e interpretación. | El montaje existente es local y no tiene audio. Reemplazarlo por una demostración de la app pública y verificar duración, contenido y acceso. |
 | Presentación final | [Material de sustentación](sustentacion.md). | Explicar sin leer código los criterios de selección, fugas, generalización, métricas y límites. |
 
-La evaluación del PDF asigna **50 % a la entrega oportuna y 50 % a la presentación final**. Una app preparada localmente no acredita por sí sola acceso público; una ejecución local del notebook no acredita una sesión real de Google Colab. El README registra el estado de esas verificaciones.
+La evaluación del PDF asigna **50 % a la entrega oportuna y 50 % a la presentación final**. La ejecución real de Colab ya está verificada y sus resultados forman parte de la entrega. El despliegue público de Streamlit sigue pendiente; la app y el video locales no acreditan por sí solos acceso público.
