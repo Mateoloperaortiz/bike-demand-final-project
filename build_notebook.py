@@ -30,19 +30,30 @@ Las conclusiones y cifras se obtienen de las celdas ejecutadas. Todos los modelo
 md("""
 ## 1. Preparar el entorno de Colab o Python local
 
-En Colab: escoger **CPU**, ejecutar todas las celdas en orden y conservar el notebook con sus salidas. La primera celda descarga la versión `v1.0` del proyecto cuando hace falta e instala las versiones fijadas. Si Colab solicita reiniciar tras la instalación, reiniciar y volver a ejecutar desde esta celda. Localmente, abrir el notebook desde la carpeta del proyecto con el entorno indicado en el README.
+En Colab: escoger **CPU y versión de entorno 2026.07 (Python 3.12)**, ejecutar todas las celdas en orden y conservar el notebook con sus salidas. Este notebook guarda esa selección en sus metadatos. La primera celda descarga la versión `v1.1` del proyecto e instala las versiones fijadas. Si informa que hay bibliotecas cargadas con otra versión, usar **Entorno de ejecución → Reiniciar sesión** y ejecutar todo otra vez. Los paquetes instalados permanecen en la VM. Localmente, abrir el notebook desde la carpeta del proyecto con el entorno indicado en el README.
+
+La [FAQ de versiones de Colab](https://research.google.com/colaboratory/runtime-version-faq.html) documenta Python 3.12.13 para 2026.07. El entorno predeterminado puede cambiar; la primera celda comprueba la compatibilidad antes de instalar.
 
 Fuente: [UCI Bike Sharing, DOI 10.24432/C5W894](https://archive.ics.uci.edu/dataset/275/bike+sharing+dataset), licencia CC BY 4.0. La VM de [Colab es temporal](https://research.google.com/colaboratory/faq.html); al final se ofrece la descarga de los artefactos.
 """)
 code("""
 from pathlib import Path
 import os, sys, subprocess, importlib.util, json, platform
+from importlib import metadata as package_metadata
 
 IN_COLAB = importlib.util.find_spec('google.colab') is not None
+if sys.version_info[:2] != (3, 12):
+    instructions = (
+        'En Colab selecciona CPU y versión de entorno 2026.07 (Python 3.12), '
+        'reconecta la sesión y ejecuta todas las celdas.' if IN_COLAB else
+        'Abre el notebook con el entorno Python 3.12 indicado en el README.'
+    )
+    raise RuntimeError(f'Python {platform.python_version()} no es compatible. {instructions}')
+
 SOURCE_REPOSITORY = 'https://github.com/Mateoloperaortiz/bike-demand-final-project.git'
-SOURCE_REF = 'v1.0'
+SOURCE_REF = 'v1.1'
 if IN_COLAB:
-    PROJECT_DIR = Path('/content/bike-demand-final-project')
+    PROJECT_DIR = Path('/content/bike-demand-final-project-v1.1')
     if not (PROJECT_DIR / 'bike_demand').is_dir():
         subprocess.run(['git', 'clone', '--depth', '1', '--branch', SOURCE_REF,
                         SOURCE_REPOSITORY, str(PROJECT_DIR)], check=True)
@@ -54,8 +65,30 @@ os.chdir(PROJECT_DIR)
 if str(PROJECT_DIR) not in sys.path:
     sys.path.insert(0, str(PROJECT_DIR))
 if IN_COLAB:
+    module_distributions = {
+        'numpy': 'numpy', 'pandas': 'pandas', 'scipy': 'scipy',
+        'sklearn': 'scikit-learn', 'joblib': 'joblib',
+        'threadpoolctl': 'threadpoolctl', 'matplotlib': 'matplotlib',
+        'seaborn': 'seaborn', 'streamlit': 'streamlit',
+    }
+    loaded_before_install = {
+        module: str(getattr(sys.modules[module], '__version__', '<desconocida>'))
+        for module in module_distributions if module in sys.modules
+    }
     subprocess.run([sys.executable, '-m', 'pip', 'install', '-q',
                     '-r', str(PROJECT_DIR / 'requirements-colab.txt')], check=True)
+    importlib.invalidate_caches()
+    mismatches = [
+        f'{module}: cargada {loaded}, instalada {package_metadata.version(module_distributions[module])}'
+        for module, loaded in loaded_before_install.items()
+        if loaded != package_metadata.version(module_distributions[module])
+    ]
+    if mismatches:
+        raise RuntimeError(
+            'La instalación cambió bibliotecas ya cargadas: ' + '; '.join(mismatches) +
+            '. Usa Entorno de ejecución → Reiniciar sesión y ejecuta todas las celdas '
+            'desde el principio. No recargues NumPy o SciPy manualmente.'
+        )
 os.environ['OMP_NUM_THREADS'] = '2'
 os.environ['MKL_NUM_THREADS'] = '2'
 os.environ['OPENBLAS_NUM_THREADS'] = '2'
@@ -502,7 +535,8 @@ nb = nbf.v4.new_notebook(cells=cells)
 nb.metadata.update({
     'kernelspec': {'display_name': 'Python 3', 'language': 'python', 'name': 'python3'},
     'language_info': {'name': 'python', 'version': '3.12.14'},
-    'colab': {'name': 'model_development.ipynb', 'provenance': []},
+    'colab': {'name': 'model_development.ipynb', 'provenance': [],
+              'runtime_attributes': {'runtime_version': '2026.07'}},
 })
 nbf.validate(nb)
 nbf.write(nb, ROOT / 'model_development.ipynb')

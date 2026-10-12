@@ -7,16 +7,20 @@ El desarrollo y entrenamiento se realizan en un notebook compatible con **Google
 ## Abrir el proyecto
 
 - **Notebook:** [model_development.ipynb](model_development.ipynb).
-- **Colab desde GitHub:** [abrir en Google Colab](https://colab.research.google.com/github/Mateoloperaortiz/bike-demand-final-project/blob/v1.0/model_development.ipynb).
-- **Código:** [repositorio público en GitHub](https://github.com/Mateoloperaortiz/bike-demand-final-project). Los archivos y la versión `v1.0` están publicados.
+- **Colab desde GitHub:** [abrir la versión v1.1 en Google Colab](https://colab.research.google.com/github/Mateoloperaortiz/bike-demand-final-project/blob/v1.1/model_development.ipynb).
+- **Código:** [repositorio público en GitHub](https://github.com/Mateoloperaortiz/bike-demand-final-project). `v1.0` está publicada; esta entrega actualiza la configuración de Colab en `v1.1`.
+- **Demostración local:** [video de 120 segundos](media/demo_local_120s.mp4) y [subtítulos SRT](media/demo_local_120s.srt), sin audio, a partir de capturas reales del prototipo.
 - **App pública:** publicación y verificación pendientes; no se anuncia todavía una URL de Streamlit.
 
 ### Ejecutar en Google Colab
 
-1. Abrir el enlace de Colab de la versión `v1.0` publicada. También se puede descargar el notebook y usar **Archivo → Subir notebook** en Colab; su primera celda descarga automáticamente el código de esa misma versión.
-2. Elegir un entorno Python con acelerador **Ninguno / CPU** y ejecutar las celdas en orden. La instalación usa `requirements-colab.txt`; si Colab pide reiniciar, hacerlo y ejecutar de nuevo desde la primera celda.
-3. La preparación descarga y comprueba los datos. El notebook desarrolla el EDA, ejecuta la comparación, selecciona el modelo y guarda la evaluación y los artefactos. No se necesita subir manualmente `hour.csv`.
-4. La última celda descarga `resultados_bike_demand.zip`, con `artifacts/`, `reportes/` y `figuras/`. Descargar también el notebook **con sus salidas** desde **Archivo → Descargar → .ipynb**. Conservar los archivos de resultados junto al código; el modelo necesita sus metadatos para cargar en la app.
+1. Abrir el notebook de **`v1.1`**. También se puede descargar y usar **Archivo → Subir notebook**; su primera celda descarga automáticamente el código de esa misma versión.
+2. En **Entorno de ejecución → Cambiar tipo de entorno de ejecución**, elegir **Python 3**, acelerador **Ninguno / CPU** y **Versión del entorno: `2026.07`**. Esa versión usa Python **3.12.13** y está fijada en los metadatos del notebook. Comprobar la selección antes de conectar; en la prueba real el entorno predeterminado ofreció Python 3.13.
+3. Ejecutar la primera celda de preparación. Instala `requirements-colab.txt` y detecta bibliotecas antiguas ya cargadas. Si aparece la indicación de reinicio, usar **Entorno de ejecución → Reiniciar sesión** y después **Ejecutar todas** desde el principio. La instalación en disco no sustituye una biblioteca que ya está importada en memoria.
+4. La preparación descarga y comprueba los datos. El notebook desarrolla el EDA, ejecuta la comparación, selecciona el modelo y guarda la evaluación y los artefactos. No se necesita subir manualmente `hour.csv`.
+5. La última celda descarga `resultados_bike_demand.zip`, con `artifacts/`, `reportes/` y `figuras/`. Descargar también el notebook **con sus salidas** desde **Archivo → Descargar → .ipynb**. Conservar los archivos de resultados junto al código; el modelo necesita sus metadatos para cargar en la app.
+
+Google documenta la selección de versiones anteriores y Python 3.12.13 para `2026.07` en su [FAQ de versiones del entorno](https://research.google.com/colaboratory/runtime-version-faq.html). Conectar a una versión anterior puede tardar unos minutos. Si esa versión deja de estar disponible, elegir otro entorno Python 3.12 compatible y volver a verificar la ejecución y las predicciones.
 
 Colab permite cargar notebooks desde GitHub o un archivo, pero los archivos de su máquina virtual son temporales. Guardar el notebook no guarda automáticamente el modelo ni los reportes de esa máquina. Véase la [FAQ oficial de Colab](https://research.google.com/colaboratory/faq.html).
 
@@ -100,6 +104,7 @@ El mayor MAE por hora en prueba aparece a las **17:00: 134,21 alquileres/hora**.
 | `figuras/` | Imágenes del EDA y de la evaluación generadas por el notebook. |
 | `requirements.txt` / `requirements-dev.txt` / `requirements-colab.txt` | Dependencias fijadas para la app, el desarrollo local y Colab. |
 | `docs/` | Reajuste, sustentación, rúbrica y guion del video. |
+| `media/demo_local_120s.mp4` / `.srt` | Borrador de demostración local de 120 segundos, sin audio, con subtítulos. |
 
 El formulario utiliza percentiles **25, 50 y 75** de temperatura y viento del entrenamiento final para los niveles relativos. Calcula calendario y festivos automáticamente y acepta fechas únicamente entre 2011-01-01 y 2012-12-31. Ofrece las tres categorías meteorológicas con evidencia suficiente para la demostración; la categoría extrema, con solo tres observaciones en el archivo, no se ofrece como escenario del formulario. Tras editar o cargar un ejemplo hay que pulsar **Estimar demanda**.
 
@@ -120,7 +125,7 @@ Si se vuelve a entrenar en un Colab que usa otra versión de Python, registrar e
 
 El notebook se ejecutó localmente de principio a fin: **18 celdas de código, sin salidas de error**, con la fuente verificada. Se entrenaron las 18 configuraciones de las tres familias y la referencia; se exportaron métricas, figuras y el modelo. La recarga reproduce las cinco predicciones guardadas antes de serializar, con tolerancia absoluta y relativa de `1e-6`.
 
-La suite local completó **48 pruebas aprobadas**. También se revisó la app en el navegador y sus tres ejemplos mostraron **721, 572 y 358** alquileres/hora. El código y el tag `v1.0` están publicados en GitHub. **La ejecución local no certifica todavía una sesión real de Google Colab ni un despliegue público de Streamlit.** El detalle y los pendientes están en [verificacion.md](docs/verificacion.md).
+La suite local completó **48 pruebas aprobadas**. También se revisó la app en el navegador y sus tres ejemplos mostraron **721, 572 y 358** alquileres/hora. El código y `v1.0` están publicados en GitHub; `v1.1` incorpora el ajuste del entorno y reinicio de Colab. **La verificación completa en una sesión real de Colab está en curso y el despliegue público de Streamlit está pendiente.** El detalle está en [verificacion.md](docs/verificacion.md).
 
 Para repetir las pruebas después de generar o descargar los artefactos, con las dependencias de desarrollo instaladas:
 
@@ -138,13 +143,14 @@ También verifican entradas inválidas, calendario, niveles exportados, esquema,
 - [Sustentación: decisiones, métricas y limitaciones](docs/sustentacion.md).
 - [Estrategia de reajuste y recuperación](docs/estrategia_reajuste.md).
 - [Guion de video de dos minutos](docs/guion_video.md).
+- [Borrador local de dos minutos](media/demo_local_120s.mp4) y [subtítulos](media/demo_local_120s.srt).
 - [Verificaciones locales y pendientes de publicación](docs/verificacion.md).
 
 La política de reajuste propone revisión mensual de precisión y distribución cuando existan resultados observados, investigación ante una subida del MAE superior al 20 % durante dos meses y revisión trimestral. Son supuestos iniciales; no hay monitoreo en vivo en este prototipo.
 
 El modelo usa clima observado y datos históricos. No estima inventario por estación, viajes perdidos ni demanda actual. Aplicarlo a una operación reciente requiere nueva información y validación.
 
-La meta de preparación del plan es el **1 de noviembre de 2026**. El PDF del taller no fija una fecha límite y evalúa 50 % entrega oportuna y 50 % presentación final. El guion debe acompañarse de un video real de dos minutos.
+La meta de preparación del plan es el **1 de noviembre de 2026**. El PDF del taller no fija una fecha límite y evalúa 50 % entrega oportuna y 50 % presentación final. Ya existe un **borrador local de 120 segundos**, sin audio, hecho con capturas reales y subtítulos; la entrega final debe reemplazarlo por una demostración de la app pública una vez desplegada.
 
 | Periodo previsto | Revisión del material y preparación de la entrega |
 |---|---|

@@ -1,0 +1,27 @@
+1
+00:00:00,000 --> 00:00:12,000
+BiciHora estima los alquileres de una hora en todo el sistema Capital Bikeshare. Exploramos escenarios históricos de Washington, de 2011 a 2012.
+
+2
+00:00:12,000 --> 00:00:30,000
+Seleccionamos Mañana laboral y pulsamos Estimar demanda. La captura muestra las condiciones y la estimación agregada de una hora.
+
+3
+00:00:30,000 --> 00:00:46,000
+Cambiamos a Sábado cálido. La fecha, la hora y las condiciones del clima cambian juntas: estas diferencias describen escenarios, no un efecto causal aislado.
+
+4
+00:00:46,000 --> 00:01:02,000
+El tercer ejemplo usa lluvia o nieve, humedad alta y viento alto. La app conserva el contexto del último escenario calculado.
+
+5
+00:01:02,000 --> 00:01:22,000
+Los datos se separan por fecha. Ridge, Random Forest y Gradient Boosting se comparan con validación futura; la prueba final no participa en la selección.
+
+6
+00:01:22,000 --> 00:01:42,000
+En 2.168 horas de prueba, el error absoluto medio fue 52,62 alquileres por hora, frente a 158,81 de la mediana. El MAE mide error general, no un intervalo individual.
+
+7
+00:01:42,000 --> 00:02:00,000
+A las 17:00 el error medio es mayor. El prototipo representa 2011–2012: una operación actual necesita datos recientes, otra validación y seguimiento del error.

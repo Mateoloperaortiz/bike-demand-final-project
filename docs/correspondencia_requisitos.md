@@ -20,7 +20,7 @@ Fuente: `Requeriments_FinalP.pdf`, entregado por el usuario. Sus apartados descr
 |---|---|---|
 | Repositorio | Código, README, dependencias, modelo, metadatos y documentos. | Enlace accesible, instalación reproducible y artefactos completos. |
 | `model_development.ipynb` | Notebook con explicaciones, EDA, justificación, comparación y evaluación. | Ejecutar todas las celdas; guardar las salidas de esa ejecución; conservar resultados fuera de la sesión de Colab. |
-| Video de demostración de dos minutos | [Guion de 120 segundos](guion_video.md), tres escenarios e interpretación del resultado. | Verificar duración del archivo final y mostrar acciones/resultados reales; el guion por sí solo no sustituye al video. |
+| Video de demostración de dos minutos | [Borrador local de 120 segundos](../media/demo_local_120s.mp4), [subtítulos](../media/demo_local_120s.srt) y [guion final](guion_video.md), con tres escenarios e interpretación. | El montaje existente es local y no tiene audio. Reemplazarlo por una demostración de la app pública y verificar duración, contenido y acceso. |
 | Presentación final | [Material de sustentación](sustentacion.md). | Explicar sin leer código los criterios de selección, fugas, generalización, métricas y límites. |
 
 La evaluación del PDF asigna **50 % a la entrega oportuna y 50 % a la presentación final**. Una app preparada localmente no acredita por sí sola acceso público; una ejecución local del notebook no acredita una sesión real de Google Colab. El README registra el estado de esas verificaciones.

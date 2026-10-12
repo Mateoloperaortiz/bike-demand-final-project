@@ -1,6 +1,6 @@
 # Verificación de la entrega
 
-Estado registrado el **12 de octubre de 2026**, zona horaria de Bogotá. Esta lista distingue evidencia local de comprobaciones en servicios externos. La versión evaluada usa Python 3.12.14 y las dependencias fijadas del repositorio.
+Estado registrado el **12 de octubre de 2026**, zona horaria de Bogotá. Esta lista distingue evidencia local de comprobaciones en servicios externos. La versión evaluada localmente usa Python 3.12.14 y las dependencias fijadas del repositorio. El notebook `v1.1` configura Colab CPU con el entorno **`2026.07`**, Python **3.12.13**.
 
 ## Comprobaciones locales completadas
 
@@ -18,17 +18,26 @@ Estado registrado el **12 de octubre de 2026**, zona horaria de Bogotá. Esta li
 | Fallos y recuperación local | Rechazo de fechas fuera de 2011–2012, horas y humedad inválidas; mensajes ante artefactos ausentes o alterados; inicio de una sesión nueva; la app utiliza el modelo guardado sin descargar datos ni entrenar. |
 | Suite | **48 pruebas aprobadas**, mediante `python -m pytest -q`. |
 | Documentación | Enlaces relativos comprobados; correspondencia con los apartados 3.1–3.9, estrategia de reajuste y guion de 120 segundos preparados. |
+| Borrador de video | [Montaje de capturas locales](../media/demo_local_120s.mp4), duración 120,0 segundos, 1.920 × 1.080, 24 fps y sin audio; [SRT](../media/demo_local_120s.srt) y [metadatos](../media/demo_local_metadata.json) disponibles. Representa la app local. |
 
 La comparación de prueba queda en [test_metrics.csv](../reportes/test_metrics.csv): Gradient Boosting presenta MAE **52,62**, RMSE **76,97** y R² **0,8542**. La mediana presenta MAE **158,81**; la reducción relativa del MAE es **66,87 %**. Véanse [el resumen de entrenamiento](../reportes/training_summary.json) y [la sustentación](sustentacion.md) para interpretar estas cifras y sus límites.
 
 ## Comprobaciones externas y entrega final
 
 - [x] Repositorio público creado: [Mateoloperaortiz/bike-demand-final-project](https://github.com/Mateoloperaortiz/bike-demand-final-project).
-- [x] Archivos publicados y tag `v1.0` accesible. El notebook de Colab descarga esa versión; comprobar el enlace después de publicarla.
-- [ ] Sesión real nueva en Google Colab, CPU: ejecución completa, notebook guardado con salidas y descarga de resultados.
+- [x] Archivos publicados y tag `v1.0` accesible.
+- [ ] Actualización `v1.1` publicada y enlace comprobado. Esta versión configura el entorno de Colab y es la referencia recomendada para el notebook.
+- [ ] **En curso:** sesión real nueva en Google Colab, CPU, entorno `2026.07`: ejecución completa tras instalar y reiniciar, notebook guardado con salidas y descarga de resultados.
 - [ ] App publicada en Streamlit Community Cloud con un entorno compatible y URL comprobada.
 - [ ] Acceso público en incógnito, sin autenticación del visitante, y ejemplos coherentes con la app local.
 - [ ] Recuperación real tras reiniciar o despertar el alojamiento de Streamlit.
-- [ ] Video final de dos minutos generado, duración y contenido revisados, archivo o enlace accesible. El [guion](guion_video.md) está listo; una grabación local se identificará como local.
+- [x] Borrador local de dos minutos generado, sin audio, con capturas reales, texto y subtítulos. No acredita un despliegue público.
+- [ ] Video final de dos minutos de la app pública, revisado y accesible, que reemplace el borrador local. El [guion](guion_video.md) está preparado.
+
+## Preparación de Colab y reinicio
+
+La prueba real encontró **Python 3.13 en el entorno predeterminado**. Para conservar Python 3.12 entre entrenamiento y app, `v1.1` fija `runtime_attributes.runtime_version` a `2026.07`. La [FAQ oficial](https://research.google.com/colaboratory/runtime-version-faq.html) identifica esa versión con Python 3.12.13.
+
+Antes de conectar, revisar **Entorno de ejecución → Cambiar tipo de entorno de ejecución**: Python 3, CPU y versión `2026.07`. Tras instalar, si la primera celda detecta bibliotecas antiguas ya cargadas y pide reinicio, usar **Reiniciar sesión** y **Ejecutar todas**. La comprobación completa en ese entorno sigue en curso; no se acredita todavía como concluida.
 
 No atribuir a Google Colab la ejecución del entorno local. Las pruebas locales de sesión nueva no sustituyen una comprobación del alojamiento remoto. Las casillas se actualizarán con evidencia al completar cada paso.

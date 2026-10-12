@@ -2,6 +2,8 @@
 
 **Duración prevista: 120 segundos exactos.** Grabar pantalla con voz en español y ajustar cada escena al tramo indicado. Mantener visible el nombre BiciHora y una escala legible; ocultar cuentas, pestañas personales y credenciales. La demostración debe usar los resultados del artefacto entregado, sin introducir cifras manuales.
 
+Ya se generó un [borrador local de 120 segundos](../media/demo_local_120s.mp4), un montaje de capturas reales de la app y figuras, **sin audio**, con [subtítulos SRT](../media/demo_local_120s.srt). Su [metadata](../media/demo_local_metadata.json) registra duración, escenas y procedencia. El siguiente guion prepara la grabación final de la app pública, que reemplazará este borrador después del despliegue.
+
 | Tiempo | Pantalla y acción | Narración propuesta |
 |---|---|---|
 | **00:00–00:15** (15 s) | App abierta, título y contexto histórico visibles. | «BiciHora estima cuántas bicicletas se alquilan durante una hora en todo Capital Bikeshare, en Washington. Está dirigido a personas que exploran escenarios de planificación y usa datos de 2011 y 2012.» |
@@ -19,4 +21,4 @@
 - Dejar que el cálculo termine antes de explicar la cifra. Si se edita una entrada, volver a pulsar **Estimar demanda**.
 - Mostrar la URL pública solo si se verificó su acceso. Una demostración local debe describirse como local.
 - Exportar un archivo de video de **00:02:00**, con voz comprensible y texto legible. Revisar inicio, fin y los tres cambios de resultado.
-- Entregar el archivo real o un enlace accesible junto al repositorio. Este documento prepara la grabación; no certifica que el video haya sido producido.
+- Para la entrega final, reemplazar el borrador local por la demostración de la app pública y compartir el archivo o un enlace accesible junto al repositorio. Hasta entonces, presentar el montaje existente como **demostración local sin audio**.
