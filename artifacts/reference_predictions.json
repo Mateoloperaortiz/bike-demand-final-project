@@ -1,0 +1,95 @@
+{
+  "feature_columns": [
+    "yr",
+    "mnth",
+    "hr",
+    "weekday",
+    "holiday",
+    "workingday",
+    "weathersit",
+    "temp",
+    "hum",
+    "windspeed"
+  ],
+  "records": [
+    {
+      "features": {
+        "yr": 1,
+        "mnth": 7,
+        "hr": 0,
+        "weekday": 0,
+        "holiday": 0,
+        "workingday": 0,
+        "weathersit": 1,
+        "temp": 0.76,
+        "hum": 0.66,
+        "windspeed": 0.0
+      },
+      "prediction": 141.86672573603104
+    },
+    {
+      "features": {
+        "yr": 1,
+        "mnth": 7,
+        "hr": 23,
+        "weekday": 1,
+        "holiday": 0,
+        "workingday": 1,
+        "weathersit": 1,
+        "temp": 0.72,
+        "hum": 0.66,
+        "windspeed": 0.1642
+      },
+      "prediction": 146.26490315908515
+    },
+    {
+      "features": {
+        "yr": 1,
+        "mnth": 8,
+        "hr": 23,
+        "weekday": 3,
+        "holiday": 0,
+        "workingday": 1,
+        "weathersit": 1,
+        "temp": 0.68,
+        "hum": 0.65,
+        "windspeed": 0.1045
+      },
+      "prediction": 151.5866867714273
+    },
+    {
+      "features": {
+        "yr": 1,
+        "mnth": 9,
+        "hr": 23,
+        "weekday": 5,
+        "holiday": 0,
+        "workingday": 1,
+        "weathersit": 1,
+        "temp": 0.66,
+        "hum": 0.89,
+        "windspeed": 0.2537
+      },
+      "prediction": 192.88700171977925
+    },
+    {
+      "features": {
+        "yr": 1,
+        "mnth": 9,
+        "hr": 23,
+        "weekday": 0,
+        "holiday": 0,
+        "workingday": 0,
+        "weathersit": 1,
+        "temp": 0.48,
+        "hum": 0.72,
+        "windspeed": 0.0896
+      },
+      "prediction": 94.95654401366593
+    }
+  ],
+  "tolerance": {
+    "rtol": 1e-06,
+    "atol": 1e-06
+  }
+}

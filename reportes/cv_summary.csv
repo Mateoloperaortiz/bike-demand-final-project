@@ -1,0 +1,5 @@
+model,cv_mae_mean,cv_mae_std,best_params
+Mediana,172.6756303679025,36.98059289840261,{}
+Ridge,91.28299953577155,19.254806021020052,"{""model__alpha"": 0.1}"
+Random Forest,62.16045091442859,15.412138831034873,"{""model__max_depth"": null, ""model__min_samples_leaf"": 1}"
+Gradient Boosting,62.24938293087581,13.426894149258885,"{""model__learning_rate"": 0.1, ""model__max_leaf_nodes"": 31, ""model__min_samples_leaf"": 10}"

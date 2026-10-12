@@ -1,0 +1,23 @@
+{
+  "winner": "Gradient Boosting",
+  "test_metrics": {
+    "mae": 52.61874555977188,
+    "rmse": 76.96530753260089,
+    "r2": 0.8542295707694523
+  },
+  "baseline_test_metrics": {
+    "mae": 158.81365313653137,
+    "rmse": 217.32411771412166,
+    "r2": -0.16223851922537658
+  },
+  "mae_reduction_vs_baseline_pct": 66.86761841909413,
+  "validation_metrics": {
+    "mae": 47.14857180486458,
+    "rmse": 68.39787363257808
+  },
+  "round_trip_reference_verified": true,
+  "reference_rows": 5,
+  "model_size_bytes": 290573,
+  "test_used_for_selection": false,
+  "dataset_sha256": "e03de4ee4ef4dc376ac6e04bf829673c6269e8eba5c60fa121640fa2f829504f"
+}
