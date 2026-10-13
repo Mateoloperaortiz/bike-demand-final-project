@@ -202,7 +202,8 @@ def compose(scene, index, start, model, metadata, summary, public_url=None):
         y = text_block(draw, "Washington · 2011–2012", (80, y + 25), 520, 29, bold=True)
         y = text_block(draw, "17.379 observaciones horarias\nFuente pública: UCI Bike Sharing", (80, y + 30), 515, 27, color=MUTED)
         text_block(draw, "Calendario + clima → demanda", (80, y + 36), 520, 29, bold=True)
-        image_panel(canvas, source, crop=(765, 85, 1800, 605))
+        intro_crop = (765, 65, 1800, 545) if public_url else (765, 85, 1800, 605)
+        image_panel(canvas, source, crop=intro_crop)
         note = (
             "Captura real de la app pública. Los ejemplos se calculan con el modelo guardado."
             if public_url else "Vista real del prototipo local. Los ejemplos se calculan con el modelo guardado."
@@ -222,7 +223,8 @@ def compose(scene, index, start, model, metadata, summary, public_url=None):
         draw.text((104, y + 51), f"{round(prediction):,}".replace(",", "."), font=font(88, True), fill="#fbfff3")
         draw.text((110, y + 163), "alquileres estimados en una hora", font=font(24), fill="#fbfff3")
         text_block(draw, "Todo el sistema Capital Bikeshare", (80, y + 250), 530, 25, color=MUTED)
-        image_panel(canvas, source, crop=(760, 500, 1800, 1215), box=(675, 225, 1840, 903))
+        screenshot_crop = (760, 545, 1800, 1165) if public_url else (760, 500, 1800, 1215)
+        image_panel(canvas, source, crop=screenshot_crop, box=(675, 225, 1840, 903))
         text_block(draw, "Captura posterior a Estimar demanda. Se muestran condiciones y resultado del mismo escenario.", (700, 925), 1115, 23, color=MUTED, spacing=4)
 
     elif scene.kind == "method":

@@ -36,7 +36,7 @@ La diferencia entre MAE de ajuste y validación permite discutir sobreajuste. La
 
 ## Resultados y explicación
 
-La ejecución real completa de **Colab CPU, entorno `2026.07`, Python 3.12.13**, seleccionó **Gradient Boosting con histogramas** por MAE de validación. Se conservaron el notebook ejecutado, el modelo y los resultados descargados; coincidieron con la ejecución local y el modelo mantuvo 48 pruebas aprobadas en Windows Python 3.12.14. Las búsquedas internas ajustaron los parámetros y la validación posterior eligió la familia:
+La ejecución real completa de **Colab CPU, entorno `2026.07`, Python 3.12.13**, seleccionó **Gradient Boosting con histogramas** por MAE de validación. Se conservaron el notebook ejecutado, el modelo y los resultados descargados; coincidieron con la ejecución local y el modelo mantiene 50 pruebas aprobadas en Windows Python 3.12.14 con las dependencias actuales. Las búsquedas internas ajustaron los parámetros y la validación posterior eligió la familia:
 
 | Modelo | MAE de ajuste | MAE de validación | RMSE de validación |
 |---|---:|---:|---:|
@@ -74,4 +74,4 @@ El clima del dataset es observado. Sin incorporar pronósticos meteorológicos, 
 | ¿Se conoce el error de cada escenario? | No. Se conoce el error agregado del bloque de prueba y de los segmentos analizados. |
 | ¿Cuándo se reajusta? | Revisión trimestral y alerta ante un aumento del MAE superior al 20 % por dos meses, si existen resultados observados comparables. Véase [estrategia de reajuste](estrategia_reajuste.md). |
 
-Para una demostración de dos minutos, seguir [el guion](guion_video.md). Verificar el estado del despliegue en el README antes de afirmar que hay un enlace público.
+La [app publicada de BiciHora](https://bicihora-mateolopera.streamlit.app/) ejecuta el modelo en Python 3.12.15 con las mismas versiones de las cinco bibliotecas del pipeline utilizadas en entrenamiento. El notebook reproduce el código histórico `v1.1`; la interfaz actual utiliza Streamlit 1.54.0 sin cambiar el modelo. Los tres ejemplos públicos muestran **721, 572 y 358** alquileres/hora, coherentes con Colab y la app local y corroborados mediante un cliente independiente sin credenciales. Se entrega un [video de 120 segundos del sitio publicado](../media/demo_public_120s.mp4), montaje de capturas reales con texto y subtítulos, sin audio; la secuencia está en [el guion](guion_video.md). Consultar [verificación](verificacion.md) para revisar las evidencias y los métodos de comprobación.

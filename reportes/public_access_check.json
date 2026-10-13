@@ -1,0 +1,143 @@
+{
+  "checked_at_utc": "2026-10-13T01:27:48.768973+00:00",
+  "app_url": "https://bicihora-mateolopera.streamlit.app/",
+  "method": "Cliente HTTP y WebSocket independiente; no automatiza un navegador.",
+  "initial_state": {
+    "cookies": 0,
+    "credentials_provided": false,
+    "browser_cookies_accessed": false,
+    "external_tokens_used": false
+  },
+  "limitations": [
+    "Esta comprobación técnica no es una prueba de navegador en incógnito.",
+    "La sesión comienza sin cookies ni credenciales y conserva solo cookies emitidas por la puerta de visitante de Streamlit Cloud. No significa ausencia de cookies durante todo el flujo.",
+    "Valida protocolo, resultados y recuperación; no valida diseño visual ni interacción de un navegador.",
+    "El prefijo /~/+ es el iframe observado de esta app en Streamlit Community Cloud; ese protocolo interno puede cambiar."
+  ],
+  "http": {
+    "initial_request_cookie_header": false,
+    "authorization_header_sent": false,
+    "anonymous_redirects": [
+      {
+        "status": 303,
+        "host": "bicihora-mateolopera.streamlit.app",
+        "path": "/"
+      },
+      {
+        "status": 303,
+        "host": "share.streamlit.io",
+        "path": "/-/auth/app"
+      },
+      {
+        "status": 303,
+        "host": "bicihora-mateolopera.streamlit.app",
+        "path": "/-/login"
+      }
+    ],
+    "landing_status": 200,
+    "app_iframe_status": 200,
+    "health_status": 200,
+    "health_body": "ok",
+    "cookies_during_session": true,
+    "fresh_session_cookie_count": 4,
+    "cookie_source": "Solo respuestas del flujo nuevo de visitante; valores no guardados."
+  },
+  "websocket": {
+    "connected": true,
+    "subprotocol": "streamlit",
+    "protocol_api": "streamlit.proto.BackMsg_pb2.BackMsg y streamlit.proto.ForwardMsg_pb2.ForwardMsg",
+    "streamlit_client_version": "1.54.0",
+    "server_environment": {
+      "streamlit_version": "1.54.0",
+      "python_version": "3.12.15.final.0",
+      "server_os": "linux"
+    },
+    "initial_script_finished_status": 0,
+    "initial_exception_count": 0,
+    "form_labels": [
+      "Fecha histórica",
+      "Hora de inicio",
+      "Condición meteorológica",
+      "Nivel térmico",
+      "Nivel de viento",
+      "Humedad relativa (%)",
+      "Estimar demanda →"
+    ],
+    "valid_scenarios": [
+      {
+        "name": "Mañana laboral",
+        "scenario": {
+          "date": "2012-06-15",
+          "hour": 8,
+          "weather": 1,
+          "thermal_level": "Templado",
+          "humidity_pct": 60,
+          "wind_level": "Medio"
+        },
+        "remote_displayed_prediction": 721,
+        "local_prediction": 721.3394604581105,
+        "local_rounded_prediction": 721,
+        "script_finished_status": 0,
+        "exception_count": 0,
+        "matched": true
+      },
+      {
+        "name": "Sábado cálido",
+        "scenario": {
+          "date": "2012-08-04",
+          "hour": 14,
+          "weather": 1,
+          "thermal_level": "Cálido",
+          "humidity_pct": 50,
+          "wind_level": "Bajo"
+        },
+        "remote_displayed_prediction": 572,
+        "local_prediction": 572.3119585832239,
+        "local_rounded_prediction": 572,
+        "script_finished_status": 0,
+        "exception_count": 0,
+        "matched": true
+      },
+      {
+        "name": "Tarde con lluvia",
+        "scenario": {
+          "date": "2012-09-10",
+          "hour": 18,
+          "weather": 3,
+          "thermal_level": "Templado",
+          "humidity_pct": 85,
+          "wind_level": "Alto"
+        },
+        "remote_displayed_prediction": 358,
+        "local_prediction": 357.95493472373676,
+        "local_rounded_prediction": 358,
+        "script_finished_status": 0,
+        "exception_count": 0,
+        "matched": true
+      }
+    ],
+    "invalid_date_test": {
+      "date_sent": "2013-01-01",
+      "method": "WidgetState directo, evitando la validación frontal del navegador.",
+      "script_finished_status": 0,
+      "no_prediction_outside_supported_period": true,
+      "exceptions": [],
+      "alerts": [
+        "La fecha debe estar entre el 01/01/2011 y el 31/12/2012. Selecciona una fecha de ese periodo o carga un ejemplo para continuar."
+      ],
+      "date_validation_alerts": [
+        "La fecha debe estar entre el 01/01/2011 y el 31/12/2012. Selecciona una fecha de ese periodo o carga un ejemplo para continuar."
+      ],
+      "graceful_validation": true
+    },
+    "recovery_after_invalid_input": {
+      "remote_displayed_prediction": 721,
+      "expected_prediction": 721,
+      "exception_count": 0,
+      "passed": true
+    }
+  },
+  "anonymous_access_and_valid_predictions_passed": true,
+  "invalid_date_graceful_handling_passed": true,
+  "passed": true
+}

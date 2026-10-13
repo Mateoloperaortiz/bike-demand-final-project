@@ -1,0 +1,71 @@
+{
+  "file": "media/demo_public_120s.mp4",
+  "duration_seconds": 120.0,
+  "frames": 2880,
+  "fps": 24,
+  "width": 1920,
+  "height": 1080,
+  "codec": "h264",
+  "audio": false,
+  "status": "App pública · capturas verificadas",
+  "kind": "Montaje de capturas reales de la app pública",
+  "public_url": "https://bicihora-mateolopera.streamlit.app",
+  "scenes": [
+    {
+      "scene": "01_intro",
+      "start_seconds": 0,
+      "end_seconds": 12,
+      "source": "media/public_app_laboral.png",
+      "source_sha256": "e520a3d75f267fd66d36d83d0295d2e34910f06aa98cb98512e413bdf8ca36b9",
+      "caption": "BiciHora estima los alquileres de una hora en todo el sistema Capital Bikeshare. Exploramos escenarios históricos de Washington, de 2011 a 2012. Esta demostración es un montaje de capturas reales de la app pública."
+    },
+    {
+      "scene": "02_laboral",
+      "start_seconds": 12,
+      "end_seconds": 30,
+      "source": "media/public_app_laboral.png",
+      "source_sha256": "e520a3d75f267fd66d36d83d0295d2e34910f06aa98cb98512e413bdf8ca36b9",
+      "caption": "Seleccionamos Mañana laboral y pulsamos Estimar demanda. La captura muestra las condiciones y la estimación agregada de una hora."
+    },
+    {
+      "scene": "03_sabado",
+      "start_seconds": 30,
+      "end_seconds": 46,
+      "source": "media/public_app_sabado.png",
+      "source_sha256": "30e876a695d6a5d1cd955643fe84c4359c96d17926a54d861f1b33cb581aa5fd",
+      "caption": "Cambiamos a Sábado cálido. La fecha, la hora y las condiciones del clima cambian juntas: estas diferencias describen escenarios, no un efecto causal aislado."
+    },
+    {
+      "scene": "04_lluvia",
+      "start_seconds": 46,
+      "end_seconds": 62,
+      "source": "media/public_app_lluvia.png",
+      "source_sha256": "2bf46fe63511d3070a837870e2faa7275f1c8047fdda3885b56fe29bdfa6fb0d",
+      "caption": "El tercer ejemplo usa lluvia o nieve, humedad alta y viento alto. La app conserva el contexto del último escenario calculado."
+    },
+    {
+      "scene": "05_metodo",
+      "start_seconds": 62,
+      "end_seconds": 82,
+      "source": "figuras/08_comparacion_modelos.png",
+      "source_sha256": "b0bed40db7f4500babde7ff055d1e1efa98877531014240d39c7d3d575433278",
+      "caption": "Los datos se separan por fecha. Ridge, Random Forest y Gradient Boosting se comparan con validación futura; la prueba final no participa en la selección."
+    },
+    {
+      "scene": "06_resultados",
+      "start_seconds": 82,
+      "end_seconds": 102,
+      "source": "figuras/10_errores_prueba.png",
+      "source_sha256": "ad7751d30f5a673c520c3ebcefd65fdb4adbe44a4a67a98c9a4f78560208c61d",
+      "caption": "En 2.168 horas de prueba, el error absoluto medio fue 52,62 alquileres por hora, frente a 158,81 de la mediana. El MAE mide error general, no un intervalo individual."
+    },
+    {
+      "scene": "07_limites",
+      "start_seconds": 102,
+      "end_seconds": 120,
+      "source": "figuras/11_error_horario.png",
+      "source_sha256": "511cfb11e6005236090b47af4f2c3ff25507094e1ca93b08d534b9c5429998e2",
+      "caption": "A las 17:00 el error medio es mayor. El prototipo representa 2011–2012: una operación actual necesita datos recientes, otra validación y seguimiento del error."
+    }
+  ]
+}

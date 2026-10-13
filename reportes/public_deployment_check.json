@@ -1,0 +1,40 @@
+{
+  "app_url": "https://bicihora-mateolopera.streamlit.app/",
+  "checked_on_local_date": "2026-10-12",
+  "timezone": "America/Bogota",
+  "repository": "Mateoloperaortiz/bike-demand-final-project",
+  "branch": "main",
+  "entrypoint": "streamlit_app.py",
+  "python_runtime": "3.12.15",
+  "python_training": "3.12.13",
+  "streamlit_runtime": "1.54.0",
+  "interface_code_commit": "74092de",
+  "local_tests": {"passed": 50, "seconds": 4.57, "python": "3.12.14"},
+  "final_interface_screenshot": "media/public_app_final.png",
+  "compatibility_policy": "Misma versión mayor y menor de Python; versiones exactas de las dependencias del pipeline.",
+  "visibility_ui": "This app is public and searchable",
+  "browser_scenarios": [
+    {"name": "Mañana laboral", "prediction_rounded": 721, "screenshot": "media/public_app_laboral.png"},
+    {"name": "Sábado cálido", "prediction_rounded": 572, "screenshot": "media/public_app_sabado.png"},
+    {"name": "Tarde con lluvia", "prediction_rounded": 358, "screenshot": "media/public_app_lluvia.png"}
+  ],
+  "reboot": {
+    "action": "Manage app > Reboot app > Reboot",
+    "disconnect_utc": "2026-10-13T01:09:28Z",
+    "reprovision_utc": "2026-10-13T01:09:33Z",
+    "dependencies_ready_utc": "2026-10-13T01:09:46Z",
+    "recovered_form": true,
+    "prediction_after_reboot": 721,
+    "screenshot": "media/public_app_reboot.png"
+  },
+  "sharing_screenshot": "media/public_app_sharing.png",
+  "hibernation_tested": false,
+  "incognito_browser_tested": true,
+  "incognito_evidence": {
+    "source": "Confirmación directa del usuario",
+    "question": "¿BiciHora abre y calcula una estimación en una ventana de incógnito, sin iniciar sesión?",
+    "answer": "Sí, abre y calcula sin iniciar sesión",
+    "automated": false
+  },
+  "anonymous_access_evidence": "reportes/public_access_check.json"
+}

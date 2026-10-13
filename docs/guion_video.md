@@ -1,18 +1,18 @@
-# Guion de demostración — 2 minutos
+# Video y guion de demostración — 2 minutos
 
-**Duración prevista: 120 segundos exactos.** Grabar pantalla con voz en español y ajustar cada escena al tramo indicado. Mantener visible el nombre BiciHora y una escala legible; ocultar cuentas, pestañas personales y credenciales. La demostración debe usar los resultados del artefacto entregado, sin introducir cifras manuales.
+**Video entregado: 120 segundos exactos.** [Ver el montaje del sitio publicado](../media/demo_public_120s.mp4), con capturas reales, texto en pantalla y [subtítulos SRT](../media/demo_public_120s.srt), **sin audio**. Se revisaron sus siete escenas, el formato H.264 a 24 fps y la resolución 1.920 × 1.080. Sus [metadatos](../media/demo_public_metadata.json) registran duración, URL y procedencia.
 
-Ya se generó un [borrador local de 120 segundos](../media/demo_local_120s.mp4), un montaje de capturas reales de la app y figuras, **sin audio**, con [subtítulos SRT](../media/demo_local_120s.srt). Sus [metadatos](../media/demo_local_metadata.json) registran duración, escenas y procedencia. El siguiente guion prepara la grabación final de la app pública, que reemplazará este borrador después del despliegue.
+La app está publicada en [BiciHora](https://bicihora-mateolopera.streamlit.app/) y los tres escenarios públicos están verificados. El [borrador local](../media/demo_local_120s.mp4) y sus [subtítulos locales](../media/demo_local_120s.srt) se conservan como material previo. La secuencia del video final es la siguiente; también puede usarse para preparar una narración en español.
 
-| Tiempo | Pantalla y acción | Narración propuesta |
+| Tiempo | Imagen mostrada | Explicación de la escena |
 |---|---|---|
-| **00:00–00:15** (15 s) | App abierta, título y contexto histórico visibles. | «BiciHora estima cuántas bicicletas se alquilan durante una hora en todo Capital Bikeshare, en Washington. Está dirigido a personas que exploran escenarios de planificación y usa datos de 2011 y 2012.» |
-| **00:15–00:35** (20 s) | Mostrar fecha, hora, clima, nivel térmico, humedad y viento. | «El formulario permite escoger fecha y hora históricas y condiciones del clima. El día de la semana y los festivos se calculan automáticamente. Los niveles de temperatura y viento representan valores relativos del conjunto histórico.» |
-| **00:35–00:55** (20 s) | Pulsar el **primer ejemplo** y **Estimar demanda**. Mostrar el resultado y la descripción del escenario. | «Cargo el primer escenario y solicito la estimación. El número mostrado corresponde al total de alquileres de esa hora para todo el sistema. Los campos que aparecen debajo identifican las condiciones utilizadas.» |
-| **00:55–01:15** (20 s) | Pulsar el **segundo ejemplo**, estimar y señalar la nueva hora y resultado. | «Ahora pruebo un segundo escenario. Cambian las condiciones y la estimación se vuelve a calcular al pulsar el botón. Así se pueden comparar patrones del calendario y el clima dentro del periodo observado.» |
-| **01:15–01:30** (15 s) | Pulsar el **tercer ejemplo**, estimar y mostrar clima/resultado. | «El tercer ejemplo permite explorar otras condiciones meteorológicas. Una predicción es una estimación: los escenarios con pocas observaciones tienen menos evidencia, y este simulador no prueba efectos causales.» |
-| **01:30–01:50** (20 s) | Abrir **Datos y metodología**. Mostrar modelo seleccionado, MAE, RMSE y R². | «Comparamos tres modelos y una referencia simple. Seleccionamos con validación temporal y evaluamos el ganador con horas posteriores que no se usaron para entrenar. El error medio que muestra la app es global; no es un intervalo de confianza de cada escenario.» |
-| **01:50–02:00** (10 s) | Volver al resultado; cerrar con contexto o enlace real de la app si existe. | «El notebook, el modelo y su documentación acompañan la entrega. Para usarlo en una operación actual se necesitan datos recientes y una nueva validación.» |
+| **00:00–00:12** (12 s) | Captura pública de BiciHora y contexto histórico. | Problema: estimar alquileres de una hora en todo Capital Bikeshare; escenarios de Washington, 2011–2012. |
+| **00:12–00:30** (18 s) | Mañana laboral, formulario y resultado **721**. | El resultado corresponde a una hora de todo el sistema; las condiciones del escenario quedan identificadas. |
+| **00:30–00:46** (16 s) | Sábado cálido y resultado **572**. | Cambian conjuntamente calendario y clima; se comparan escenarios, sin atribuir un efecto causal aislado. |
+| **00:46–01:02** (16 s) | Tarde con lluvia y resultado **358**. | Clima adverso, humedad y viento altos; la app conserva el contexto del escenario calculado. |
+| **01:02–01:22** (20 s) | Figura de comparación de modelos. | Separación temporal, tres familias y validación posterior; la prueba final queda fuera de la selección. |
+| **01:22–01:42** (20 s) | Figura de errores en prueba. | En 2.168 horas, MAE 52,62 frente a 158,81 de la mediana; el MAE es global y no un intervalo individual. |
+| **01:42–02:00** (18 s) | Error por hora y cierre con URL pública. | Mayor error a las 17:00; uso histórico y necesidad de datos recientes, validación y seguimiento para una operación actual. |
 
 ## Preparación y verificación
 
@@ -20,5 +20,5 @@ Ya se generó un [borrador local de 120 segundos](../media/demo_local_120s.mp4),
 - En metodología, el modelo seleccionado es Gradient Boosting; MAE **52,6**, RMSE **77,0** y R² **0,854**, según el redondeo de la app.
 - Dejar que el cálculo termine antes de explicar la cifra. Si se edita una entrada, volver a pulsar **Estimar demanda**.
 - Mostrar la URL pública solo si se verificó su acceso. Una demostración local debe describirse como local.
-- Exportar un archivo de video de **00:02:00**, con voz comprensible y texto legible. Revisar inicio, fin y los tres cambios de resultado.
-- Para la entrega final, reemplazar el borrador local por la demostración de la app pública y compartir el archivo o un enlace accesible junto al repositorio. Hasta entonces, presentar el montaje existente como **demostración local sin audio**.
+- El archivo final ya fue comprobado con duración **00:02:00**, texto legible y tres resultados reales. Si se prepara otra versión con voz, conservar el mismo alcance y revisar inicio, fin y cambios de resultado.
+- Compartir el video público y sus subtítulos junto al repositorio. Describirlo como **montaje de capturas reales del sitio publicado, sin audio**.

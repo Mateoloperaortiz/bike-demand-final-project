@@ -9,8 +9,10 @@ El desarrollo y entrenamiento se realizan en un notebook compatible con **Google
 - **Notebook:** [model_development.ipynb](model_development.ipynb).
 - **Colab desde GitHub:** [abrir el notebook ejecutado en Google Colab](https://colab.research.google.com/github/Mateoloperaortiz/bike-demand-final-project/blob/main/model_development.ipynb).
 - **Código:** [repositorio público en GitHub](https://github.com/Mateoloperaortiz/bike-demand-final-project). La versión `v1.1` está publicada; `main` contiene el notebook con resultados de la ejecución real de Colab.
-- **Demostración local:** [video de 120 segundos](media/demo_local_120s.mp4) y [subtítulos SRT](media/demo_local_120s.srt), sin audio, a partir de capturas reales del prototipo.
-- **App pública:** publicación y verificación pendientes; no se anuncia todavía una URL de Streamlit.
+- **App pública:** [abrir BiciHora](https://bicihora-mateolopera.streamlit.app/), publicada en Streamlit Community Cloud; sus tres escenarios están verificados en Chrome.
+- **Video de entrega:** [demostración de 120 segundos](media/demo_public_120s.mp4) y [subtítulos SRT](media/demo_public_120s.srt), montaje de capturas reales del sitio publicado, con texto en pantalla y sin audio.
+
+![BiciHora publicada: escenario Mañana laboral](media/public_app_final.png)
 
 ### Ejecutar en Google Colab
 
@@ -104,15 +106,21 @@ El mayor MAE por hora en prueba aparece a las **17:00: 134,21 alquileres/hora**.
 | `figuras/` | Imágenes del EDA y de la evaluación generadas por el notebook. |
 | `requirements.txt` / `requirements-dev.txt` / `requirements-colab.txt` | Dependencias fijadas para la app, el desarrollo local y Colab. |
 | `docs/` | Reajuste, sustentación, rúbrica y guion del video. |
-| `media/demo_local_120s.mp4` / `.srt` | Borrador de demostración local de 120 segundos, sin audio, con subtítulos. |
+| `media/demo_public_120s.mp4` / `.srt` | Video de entrega de 120 segundos: capturas reales del sitio publicado, texto en pantalla y subtítulos, sin audio. |
+| `media/demo_public_metadata.json` | Duración, escenas, URL y procedencia del video público. |
+| `media/demo_local_120s.mp4` / `.srt` | Borrador local conservado como material previo. |
 
 El formulario utiliza percentiles **25, 50 y 75** de temperatura y viento del entrenamiento final para los niveles relativos. Calcula calendario y festivos automáticamente y acepta fechas únicamente entre 2011-01-01 y 2012-12-31. Ofrece las tres categorías meteorológicas con evidencia suficiente para la demostración; la categoría extrema, con solo tres observaciones en el archivo, no se ofrece como escenario del formulario. Tras editar o cargar un ejemplo hay que pulsar **Estimar demanda**.
 
 ## Reproducibilidad y despliegue
 
-El modelo entregado se entrenó en **Colab CPU, entorno `2026.07`, Python 3.12.13**. Se verificó también su carga en Windows con **Python 3.12.14**. Las dependencias están fijadas; los metadatos registran el entorno que produjo el modelo y su hash. El cargador comprueba la misma versión mayor y menor de Python, las versiones exactas de NumPy, pandas, SciPy, scikit-learn y joblib, el esquema y el hash del modelo. El parche de Python queda registrado; la compatibilidad entre ambas máquinas se confirmó con predicciones de referencia y la suite de pruebas. Scikit-learn requiere conservar las versiones de las dependencias entre entrenamiento e inferencia; consultar su [documentación de persistencia](https://scikit-learn.org/stable/model_persistence.html).
+El modelo entregado se entrenó en **Colab CPU, entorno `2026.07`, Python 3.12.13**. Se verificó su carga en Windows con **Python 3.12.14** y en Streamlit Community Cloud con **Python 3.12.15**. Las dependencias del servidor coinciden: NumPy 2.2.6, pandas 2.3.3, SciPy 1.16.3, scikit-learn 1.7.2 y joblib 1.5.2.
 
-Para publicar en Streamlit Community Cloud:
+Los metadatos registran el entorno que produjo el modelo y su hash. El cargador comprueba la misma versión mayor y menor de Python, las versiones exactas de las cinco bibliotecas, el esquema y el hash del modelo. El parche de Python queda registrado; la compatibilidad se confirmó con predicciones de referencia, la suite local y los escenarios del servidor. Scikit-learn requiere conservar las versiones de las dependencias entre entrenamiento e inferencia; consultar su [documentación de persistencia](https://scikit-learn.org/stable/model_persistence.html).
+
+El experimento de Colab conserva el código y las dependencias históricos de **`v1.1`**. La interfaz y las herramientas de desarrollo de `main` se actualizaron a **Streamlit 1.54.0, nbconvert 7.17.1 y pytest 9.0.3**. Las cinco bibliotecas del pipeline, el modelo y los resultados del notebook permanecen iguales; no se requiere que Streamlit o las herramientas de desarrollo coincidan con el entorno histórico de Colab.
+
+La app está publicada desde `main` y `streamlit_app.py`. Para reproducir el despliegue en Streamlit Community Cloud:
 
 1. Subir el proyecto completo al repositorio, incluidos `artifacts/` y `requirements.txt`.
 2. En [Streamlit Community Cloud](https://share.streamlit.io/), crear una app con el repositorio `Mateoloperaortiz/bike-demand-final-project`, rama `main` y archivo `streamlit_app.py`.
@@ -125,7 +133,9 @@ Si se vuelve a entrenar en un Colab que usa otra versión de Python, registrar e
 
 El notebook se ejecutó de principio a fin tanto localmente como en una **sesión real de Google Colab CPU, entorno `2026.07`, Python 3.12.13**. La ejecución de Colab tiene **18 celdas de código numeradas de 1 a 18, sin errores**. Se descargaron el notebook con sus salidas y el ZIP de resultados, cuyos **28 archivos** de `artifacts/`, `reportes/` y `figuras/` se importaron a esta entrega.
 
-Todas las métricas, predicciones de prueba, cinco referencias y SHA-256 del modelo coincidieron con la ejecución local. El modelo de Colab carga en Windows Python 3.12.14 y mantiene **48 pruebas aprobadas**. También se revisó la app local en el navegador: sus ejemplos muestran **721, 572 y 358** alquileres/hora. `v1.1` está publicada en GitHub y el notebook ejecutado se conserva en `main`. **El despliegue público de Streamlit sigue pendiente de conectar el repositorio y verificar la app.** El detalle y la evidencia de Colab están en [verificacion.md](docs/verificacion.md).
+Todas las métricas, predicciones de prueba, cinco referencias y SHA-256 del modelo coincidieron con la ejecución local. El modelo de Colab carga en Windows Python 3.12.14 y mantiene **50 pruebas aprobadas** con las dependencias actuales. La [app publicada](https://bicihora-mateolopera.streamlit.app/) muestra los mismos **721, 572 y 358** alquileres/hora en sus tres escenarios verificados en Chrome. Su configuración de acceso está marcada como pública y buscable. Tras **Reboot**, volvió el formulario y el primer escenario volvió a producir **721**.
+
+`v1.1` está publicada en GitHub y el notebook ejecutado se conserva en `main`. El video público fue revisado: **120,0 s**, siete escenas, 1.920 × 1.080, H.264, 24 fps, con texto y subtítulos, sin audio. El usuario confirmó que la app **abre y calcula sin iniciar sesión en una ventana de incógnito**; esta comprobación es manual. Un cliente independiente sin credenciales también reprodujo las tres predicciones en el servidor **Streamlit 1.54.0**. Una fecha forzada fuera del periodo mostró un aviso en español, sin excepciones ni nueva predicción; al corregirla, volvió a calcular **721**. El detalle está en [public_access_check.json](reportes/public_access_check.json) y [verificacion.md](docs/verificacion.md). No se ha forzado una suspensión del alojamiento.
 
 Para repetir las pruebas después de generar o descargar los artefactos, con las dependencias de desarrollo instaladas:
 
@@ -135,7 +145,7 @@ python -m pytest -q
 
 Las pruebas verifican los conjuntos temporales sin solapamiento, cinco bloques completos de CV con separación de dos días, el presupuesto de búsqueda y transformaciones ajustadas solo con entrenamiento. Comprueban los hashes del ZIP/CSV, rechazo de fuentes alteradas y las métricas recalculadas independientemente contra las respuestas reales de prueba.
 
-También verifican entradas inválidas, calendario, niveles exportados, esquema, hash del modelo, recarga de predicciones y los tres ejemplos de la interfaz. Incluyen inicio sin artefactos y una sesión nueva; el reinicio real del alojamiento y el acceso en incógnito se comprueban después de publicar.
+También verifican entradas inválidas, calendario, niveles exportados, esquema, hash del modelo, recarga de predicciones y los tres ejemplos de la interfaz. Incluyen las regresiones de fechas 2010/2013, recuperación tras corregir la entrada, inicio sin artefactos y una sesión nueva; además, se verificó el reinicio real del alojamiento. El estado de las comprobaciones de acceso y el cliente técnico [check_public_access.py](scripts/check_public_access.py) están en [verificación](docs/verificacion.md).
 
 ## Entrega y sustentación
 
@@ -143,14 +153,15 @@ También verifican entradas inválidas, calendario, niveles exportados, esquema,
 - [Sustentación: decisiones, métricas y limitaciones](docs/sustentacion.md).
 - [Estrategia de reajuste y recuperación](docs/estrategia_reajuste.md).
 - [Guion de video de dos minutos](docs/guion_video.md).
-- [Borrador local de dos minutos](media/demo_local_120s.mp4) y [subtítulos](media/demo_local_120s.srt).
-- [Verificaciones locales y pendientes de publicación](docs/verificacion.md).
+- [Video final del sitio publicado](media/demo_public_120s.mp4) y [subtítulos](media/demo_public_120s.srt).
+- [Borrador local conservado](media/demo_local_120s.mp4) y [subtítulos locales](media/demo_local_120s.srt).
+- [Verificaciones de Colab, app publicada y entrega](docs/verificacion.md).
 
 La política de reajuste propone revisión mensual de precisión y distribución cuando existan resultados observados, investigación ante una subida del MAE superior al 20 % durante dos meses y revisión trimestral. Son supuestos iniciales; no hay monitoreo en vivo en este prototipo.
 
 El modelo usa clima observado y datos históricos. No estima inventario por estación, viajes perdidos ni demanda actual. Aplicarlo a una operación reciente requiere nueva información y validación.
 
-La meta de preparación del plan es el **1 de noviembre de 2026**. El PDF del taller no fija una fecha límite y evalúa 50 % entrega oportuna y 50 % presentación final. Ya existe un **borrador local de 120 segundos**, sin audio, hecho con capturas reales y subtítulos; la entrega final debe reemplazarlo por una demostración de la app pública una vez desplegada.
+La meta de preparación del plan es el **1 de noviembre de 2026**. El PDF del taller no fija una fecha límite y evalúa 50 % entrega oportuna y 50 % presentación final. Se entrega un **video de 120 segundos del sitio publicado**, hecho con capturas reales, texto en pantalla y subtítulos, sin audio; el borrador local se conserva identificado como tal.
 
 | Periodo previsto | Revisión del material y preparación de la entrega |
 |---|---|
