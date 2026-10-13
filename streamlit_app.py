@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from datetime import date
+from datetime import date, datetime
 from html import escape
 import logging
 import math
@@ -100,12 +100,32 @@ def _preset(example: dict) -> None:
     st.session_state["scenario_wind"] = example["wind_level"]
     st.session_state["last_result"] = None
     st.session_state["preset_name"] = example["name"]
+    st.session_state["date_warning"] = None
 
 
 def _initialize(examples: list[dict]) -> None:
     if "scenario_date" not in st.session_state:
         _preset(examples[0])
         st.session_state["preset_name"] = None
+
+
+def _guard_date_state() -> None:
+    """Valida el estado remoto antes de que date_input compruebe su rango."""
+    value = st.session_state.get("scenario_date")
+    if value is None:
+        return
+    if isinstance(value, datetime):
+        value = value.date()
+        st.session_state["scenario_date"] = value
+    if not isinstance(value, date) or not DATE_MIN <= value <= DATE_MAX:
+        st.session_state["scenario_date"] = None
+        st.session_state["last_result"] = None
+        st.session_state["date_warning"] = (
+            "La fecha debe estar entre el 01/01/2011 y el 31/12/2012. "
+            "Selecciona una fecha de ese periodo o carga un ejemplo para continuar."
+        )
+    else:
+        st.session_state["date_warning"] = None
 
 
 def _date_label(value: date) -> str:
@@ -203,6 +223,7 @@ def main() -> None:
         st.stop()
 
     _initialize(examples)
+    _guard_date_state()
     st.caption("Empieza con un escenario precargado o ajusta los campos a continuación.")
     for index, (column, example) in enumerate(zip(st.columns(3), examples[:3])):
         with column:
@@ -215,6 +236,8 @@ def main() -> None:
             )
     if st.session_state.get("preset_name"):
         st.caption(f"Escenario cargado: {st.session_state['preset_name']}. Pulsa Estimar demanda para calcularlo.")
+    if st.session_state.get("date_warning"):
+        st.warning(st.session_state["date_warning"])
 
     inputs, output = st.columns([1.18, 1], gap="large")
     with inputs:
@@ -246,7 +269,7 @@ def main() -> None:
             st.caption("Frío, templado y cálido; viento bajo, medio y alto: niveles relativos al clima histórico de Washington.")
             submitted = st.form_submit_button("Estimar demanda →", type="primary", use_container_width=True)
 
-        if submitted:
+        if submitted and not st.session_state.get("date_warning"):
             scenario = {
                 "date": selected_date, "hour": hour, "weather": weather,
                 "thermal_level": thermal_level, "humidity_pct": humidity, "wind_level": wind_level,

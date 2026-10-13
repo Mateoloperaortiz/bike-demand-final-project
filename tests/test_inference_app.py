@@ -234,6 +234,33 @@ def test_cleared_date_removes_old_result_and_requests_valid_date(artifacts):
     assert not app.metric
 
 
+@pytest.mark.parametrize("invalid_date", [date(2010, 12, 31), date(2013, 1, 1)])
+def test_out_of_range_widget_date_shows_guidance_and_recovers_with_preset(artifacts, invalid_date):
+    app = AppTest.from_file(str(APP), default_timeout=30).run()
+    next(button for button in app.button if button.label == "Estimar demanda →").click().run()
+    assert app.session_state["last_result"] is not None
+    # AppTest serializa esta fecha como WidgetState, igual que la entrada remota.
+    app.date_input(key="scenario_date").set_value(invalid_date)
+    next(button for button in app.button if button.label == "Estimar demanda →").click().run()
+    assert not app.exception
+    assert not app.error
+    assert len(app.warning) == 1
+    assert "2011" in app.warning[0].value and "2012" in app.warning[0].value
+    assert "ejemplo" in app.warning[0].value
+    assert app.date_input(key="scenario_date").value is None
+    assert app.session_state["last_result"] is None
+    assert not app.metric
+    app.button(key="example_0").click().run()
+    assert not app.exception
+    assert not app.warning
+    assert app.date_input(key="scenario_date").value == date.fromisoformat(artifacts[1]["examples"][0]["date"])
+    next(button for button in app.button if button.label == "Estimar demanda →").click().run()
+    assert not app.exception
+    assert not app.error
+    assert len(app.metric) == 1
+    assert app.session_state["last_result"]["prediction"] >= 0
+
+
 def test_startup_and_submission_use_only_saved_model(artifacts, monkeypatch):
     def forbidden(*args, **kwargs):
         pytest.fail("El simulador no debe descargar datos ni volver a entrenar.")
